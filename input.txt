@@ -1,13 +1,12 @@
-Q: q0, q1, q2
-Σ: a, b
+Q: q0, q1, q2, q3
+Σ: a, b, c
 δ:
-q0, a -> q1
-q0, a -> q2
-q0, b -> q2
-q1, a -> q1
-q1, b -> q0
-q2, a -> q1
-q2, b -> q2
+q0, a -> q0
+q0, b -> q0
+q0, c -> q0
+q0, c -> q1
+q1, a -> q2
+q2, b -> q3
 q0: inicial
-F: q2
-w: abab
+F: q3
+w: abcaaaaaaaca
