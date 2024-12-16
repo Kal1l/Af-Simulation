@@ -1,6 +1,7 @@
 import AFNtoAFD
 import reverso
 import complement
+import AFN_reverse_to_AFD
 
 def main():
     input_path = 'input.txt'
@@ -22,11 +23,19 @@ def main():
     print(f"Cadeia: {w}")
     print(f"Resultado: {result}")
     
-    # Operação de reverso no AFD
-    reversed_dfa_states, Sigma, reversed_dfa_delta, reversed_dfa_start_state, reversed_dfa_final_states = reverso.afd_reverso(dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states)
+    # 1. Leitura do arquivo de entrada (AFN original)
+
+    output_path_reverso = "AFN_reverso.txt"
+
+    # 2. Reversão do AFN e conversão para AFD
+    dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states = reverso.afn_reverso_para_afd(Q, Sigma, delta, q0, F)
     
-    # Salva o AFD reverso em um arquivo REV.txt
-    reverso.save_reversed_afd('REV.txt', reversed_dfa_states, Sigma, reversed_dfa_delta, reversed_dfa_start_state, reversed_dfa_final_states)
+    # 3. Salvar o AFD revertido em um arquivo
+    reverso.save_reversed_afn(output_path_reverso, dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states)
+
+    Q, Sigma, delta, q0, F, w = AFN_reverse_to_AFD.read_afn(output_path_reverso)
+    dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states = AFNtoAFD.afn_to_afd(Q, Sigma, delta, q0, F)
+    AFN_reverse_to_AFD.save_afd('REV.txt',dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states)
 
     dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states = complement.ler_afd_do_arquivo('AFD.txt')
     
