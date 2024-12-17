@@ -22,7 +22,6 @@ def read_afn(output_path_reverso):
     delta = defaultdict(list)
     q0 = None
     F = set()
-    w = None
 
     # Buscando a linha que contém Q (estados)
     for line in lines:
@@ -40,14 +39,12 @@ def read_afn(output_path_reverso):
             q0 = line.split(': ')[0].strip()
         elif line.startswith("F:"):  # Estados finais
             F = set(line.split(': ')[1].split(', '))
-        elif line.startswith("w:"):  # Palavra (não necessariamente utilizada aqui)
-            w = line.split(': ')[1].strip()
 
     # Verificando se todos os dados necessários foram encontrados
     if not Q or not Sigma or not delta or q0 is None or not F:
         raise ValueError("O arquivo está incompleto ou mal formatado. Verifique as seções de Q, Σ, δ, estado inicial e estados finais.")
 
-    return Q, Sigma, delta, q0, F, w
+    return Q, Sigma, delta, q0, F
 
 def afn_to_afd(Q, Sigma, delta, q0, F):
     # Lista para armazenar os estados do AFD

@@ -29,7 +29,7 @@ def main():
     dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states = reverso.afn_reverso_para_afd(Q, Sigma, delta, q0, F)
     reverso.save_reversed_afn(output_path_reverso, dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states)
 
-    Q, Sigma, delta, q0, F, w = AFNreversetoAFD.read_afn(output_path_reverso)
+    Q, Sigma, delta, q0, F = AFNreversetoAFD.read_afn(output_path_reverso)
     dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states = AFNtoAFD.afn_to_afd(Q, Sigma, delta, q0, F)
     AFNreversetoAFD.save_afd(rev_path, dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states)
 
