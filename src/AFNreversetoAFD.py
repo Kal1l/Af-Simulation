@@ -49,11 +49,71 @@ def read_afn(output_path_reverso):
 
     return Q, Sigma, delta, q0, F, w
 
+def afn_to_afd(Q, Sigma, delta, q0, F):
+    # Lista para armazenar os estados do AFD
+    dfa_states = []
+    # Dicionário para as transições do AFD
+    dfa_delta = {}
+    # Estado inicial do AFD como conjunto congelado (frozenset)
+    dfa_start_state = frozenset([q0])
+    # Conjunto de estados finais do AFD
+    dfa_final_states = set()
+
+    # Estado morto (representado por frozenset vazio)
+    dead_state = frozenset(["dead_state"])
+
+    # Adicionando o estado inicial do AFD à lista de estados
+    if q0 in F:
+        dfa_final_states.add(dfa_start_state)
+
+    # Fila de estados não processados (começando com o estado inicial)
+    unprocessed_states = [dfa_start_state]
+    # Conjunto de estados processados
+    processed_states = set()
+
+    while unprocessed_states:
+        current_state = unprocessed_states.pop()
+        processed_states.add(current_state)
+
+        # Adicionando o estado atual à lista de estados do AFD
+        if current_state not in dfa_states:
+            dfa_states.append(current_state)
+
+        # Para cada símbolo no alfabeto
+        for symbol in Sigma:
+            next_state = set()  # Conjunto para armazenar os próximos estados
+
+            # Para cada subestado no conjunto de estados atual
+            for sub_state in current_state:
+                # Se houver transições no delta do AFN, adicione os próximos estados
+                if (sub_state, symbol) in delta:
+                    next_state.update(delta[(sub_state, symbol)])
+
+            # Se não houver transições válidas, o próximo estado é o estado morto
+            if not next_state:
+                next_state = dead_state
+
+            # Convertendo para frozenset (para garantir que sejam tratados como estados únicos)
+            next_state = frozenset(next_state)
+
+            # Registrando a transição no AFD
+            dfa_delta[(current_state, symbol)] = next_state
+
+            # Se o próximo estado ainda não foi processado, adicione-o à fila de estados não processados
+            if next_state not in processed_states and next_state not in unprocessed_states:
+                unprocessed_states.append(next_state)
+
+            # Se algum subestado do próximo estado for final no AFN, adicione o estado ao conjunto de estados finais
+            if any(sub_state in F for sub_state in next_state):
+                dfa_final_states.add(next_state)
+
+    return dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states
+
 def format_state(state):
     # Se o estado for um frozenset vazio, retorna o símbolo "∅"
     if isinstance(state, frozenset) and len(state) == 0:
-        return "∅"
-    elif isinstance(state, frozenset):  # Quando o estado é um frozenset com elementos
+        return "dead_state"
+    if isinstance(state, frozenset):  # Quando o estado é um frozenset com elementos
         return "{" + ", ".join(sorted(str(x) for x in state)) + "}"
     return str(state)  # Caso contrário, converte o estado para string
 

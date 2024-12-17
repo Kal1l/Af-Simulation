@@ -1,21 +1,21 @@
 # AFD Reverso
-Q: {q3}, ∅, {q2}, {q1}, {q0}
-Σ: b, a, c
+Q: {q3}, dead_state, {q2}, {q1}, {q0}
+Σ: b, c, a
 q0: {q3}: inicial
 F: {q0}
 δ:
 {q3}, b -> {q2}
-{q3}, a -> ∅
-{q3}, c -> ∅
-∅, b -> ∅
-∅, a -> ∅
-∅, c -> ∅
-{q2}, b -> ∅
+{q3}, c -> dead_state
+{q3}, a -> dead_state
+dead_state, b -> dead_state
+dead_state, c -> dead_state
+dead_state, a -> dead_state
+{q2}, b -> dead_state
+{q2}, c -> dead_state
 {q2}, a -> {q1}
-{q2}, c -> ∅
-{q1}, b -> ∅
-{q1}, a -> ∅
+{q1}, b -> dead_state
 {q1}, c -> {q0}
+{q1}, a -> dead_state
 {q0}, b -> {q0}
-{q0}, a -> {q0}
 {q0}, c -> {q0}
+{q0}, a -> {q0}
