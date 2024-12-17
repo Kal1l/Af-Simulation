@@ -59,18 +59,13 @@ def save_complement_afd(output_path, dfa_states, Sigma, dfa_delta, dfa_start_sta
         file.write(f"F: {', '.join(format_state(f) for f in sorted(new_final_states, key=str))}\n")
         file.write("δ:\n")
         
-        # Escrevendo as transições (no formato {estado}, simbolo -> {estado seguinte})
+        # Escrevendo as transições
         for (state, symbol), next_states in sorted(dfa_delta.items(), key=lambda x: (str(x[0]), x[1])):
-            # O next_states precisa ser uma lista de estados, e não uma lista de frozensets
-            # Então, vamos processar para extrair o formato correto para os estados
             for next_state in next_states:
-                if isinstance(next_state, frozenset):
-                    next_state_str = "{" + ", ".join(sorted(next_state)) + "}"
-                else:
-                    next_state_str = str(next_state)
-
-                # Grava as transições sem quebras de linha extras
-                file.write(f"{format_state(state)}, {symbol} -> {next_state_str}\n")
+                formatted_next_state = format_state(next_state)
+                if formatted_next_state.endswith("}"):  # Verifica se o estado termina com '}'
+                    formatted_next_state = formatted_next_state[:-1]  # Remove a última chave
+                file.write(f"{format_state(state)}, {symbol} -> {formatted_next_state}")
 
 def format_state(state):
     """
@@ -79,3 +74,4 @@ def format_state(state):
     if isinstance(state, frozenset):  # Verifica se o estado é um frozenset
         return "{" + ", ".join(sorted(state)) + "}"  # Ordena os estados e os coloca entre chaves
     return str(state)
+
