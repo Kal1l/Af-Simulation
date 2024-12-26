@@ -1,8 +1,3 @@
-#Arrumar ordem que o programa lê os estados e transições
-#Fazer função do complementar
-#Fazer função de arquivo do complementar
-#Fazer função do reverso
-#Fazer função de arquivo do reverso
 from collections import defaultdict
 
 def AFN(input_path, output_path):
