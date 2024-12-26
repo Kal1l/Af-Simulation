@@ -43,3 +43,5 @@ O arquivo de entrada `input.txt` deve seguir o seguinte formato:
 - `F`: Conjunto de estados finais do autômato.
 - `w`: Cadeia de entrada a ser processada pelo autômato.
 
+A cadeia exemplo aceita termina com `cab`
+
