@@ -1,8 +1,3 @@
-#Arrumar ordem que o programa lê os estados e transições
-#Fazer função do complementar
-#Fazer função de arquivo do complementar
-#Fazer função do reverso
-#Fazer função de arquivo do reverso
 from collections import defaultdict
 
 def read_afn(output_path_reverso):
@@ -107,7 +102,6 @@ def afn_to_afd(Q, Sigma, delta, q0, F):
     return dfa_states, Sigma, dfa_delta, dfa_start_state, dfa_final_states
 
 def format_state(state):
-    # Se o estado for um frozenset vazio, retorna o símbolo "∅"
     if isinstance(state, frozenset) and len(state) == 0:
         return "dead_state"
     if isinstance(state, frozenset):  # Quando o estado é um frozenset com elementos
