@@ -1,6 +1,3 @@
-#Cadeia fica none se o alfabeto for número
-#adição do dead state, talvez tentar da um return fusão de todos os estados
-
 import os
 import src.AFNtoAFD as AFNtoAFD
 import src.reverso as reverso
