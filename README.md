@@ -29,7 +29,7 @@ Este projeto em Python realiza a conversão de Autômatos Finitos Não Determin�
   
 ## Como Executar
 
-1. Modifique o arquivo de entrada da maneira como quiser testar
+1. Modifique o arquivo de entrada da de acordo a estrutura do template
 2. Execute o script principal: `python main.py`
 
 ## Estrutura do Arquivo de Entrada
